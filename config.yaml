@@ -1,0 +1,66 @@
+base_model: meta-llama/Meta-Llama-3-8B-Instruct
+model_type: LlamaForCausalLM
+
+datasets:
+  - path: pruned_dataset.jsonl
+    type: chat_template
+    message_property_mappings:
+      role: role
+      content: content
+
+output_dir: ./automated_me
+
+auto_resume_from_checkpoints: true
+
+flash_attention: true
+flash_attn: true
+attn_implementation: flash_attention_2
+model_config_type: AutoModelForCausalLM
+
+model_kwargs:
+  attn_implementation: flash_attention_2
+
+load_in_4bit: true
+bnb_4bit_quant_type: nf4
+bnb_4bit_compute_dtype: bfloat16
+bnb_4bit_use_double_quant: true
+
+micro_batch_size: 16
+gradient_accumulation_steps: 1
+gradient_checkpointing: true
+
+dataloader_num_workers: 2
+dataloader_pin_memory: true
+
+num_epochs: 5
+learning_rate: 3e-5
+max_steps: -1
+warmup_steps: 200
+optimizer: adamw_torch
+lr_scheduler: cosine
+logging_steps: 10
+save_steps: 500
+eval_steps: 0
+
+adapter: lora
+lora_r: 128
+lora_alpha: 256
+lora_dropout: 0.1
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+sequence_len: 2048
+trust_remote_code: true
+
+special_tokens:
+  pad_token: "[PAD]"
+resize_token_embeddings: true
+
+bf16: true
+tf32: true

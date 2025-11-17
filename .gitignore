@@ -205,3 +205,14 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Local Stuff you probably want to keep private or is unnecessary
+*.csv
+*.jsonl
+*.json
+bot_imgs
+automated_me
+automated_me_v3
+last_run_prepared
+llama-venv
+test.py
