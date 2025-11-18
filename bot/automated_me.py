@@ -245,7 +245,7 @@ async def on_message(message):
     
     wait_time = random.uniform(5, 15)
     batch_timer = asyncio.create_task(
-        delayed_response(channel_id, user_id, wait_time)
+        delayed_response(channel_id, wait_time)
     )
 
 
@@ -331,7 +331,7 @@ async def in_progress(ctx):
 Admin Commands
 '''
 
-OWNER_ID = os.environ["OWNER_ID"]
+OWNER_ID = int(os.environ["OWNER_ID"])
 
 def is_owner(ctx):
     return ctx.author.id == OWNER_ID
